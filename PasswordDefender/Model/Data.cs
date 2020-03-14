@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace PasswordDefender.Model
 {
-    class Data
+    class Data // Модель данных, подлежащих шифрованию и дешифрованию
     {
-        string site { get; set; }
-        string login { get; set; }
-        string password { get; set; }
+        public Data(string site, string login, string password)
+        {
+            this.site = site;
+            this.login = login;
+            this.password = password;
+        }
+
+        public string site { get; set; }
+        public string login { get; set; }
+        public string password { get; set; }
     }
 }

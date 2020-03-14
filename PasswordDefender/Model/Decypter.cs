@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PasswordDefender.Model
 {
-    interface Decypter
+    interface Decyptor // Интерфейс для классов, предоставляющих методы дешифрования данных
     {
-        Data Decrypt(Data data);
+        Data DecryptData(Data data); // Метод, шифрующий свойства класса Data
     }
 }
