@@ -8,22 +8,52 @@
         Title="PasswordDefender - менеджер паролей" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
         <TabControl HorizontalAlignment="Left" Height="401" Margin="0,10,0,0" VerticalAlignment="Top" Width="784">
-            <TabItem Header="Данные" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid HorizontalAlignment="Left" Height="349" Margin="10,10,0,0" VerticalAlignment="Top" Width="758"/>
+            <TabItem Header="Данные" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="10,0,-64,-2">
+                <Grid Background="#FFE8EAEE">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="333*"/>
+                        <ColumnDefinition Width="56*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Удалить" HorizontalAlignment="Left" Margin="1,335,0,0" VerticalAlignment="Top" Width="101" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Column="1" IsEnabled="False"/>
+                    <DataGrid HorizontalAlignment="Center" Height="314" Margin="10,16,10,0" VerticalAlignment="Top" Width="758" HorizontalGridLinesBrush="DarkGray"
+    RowBackground="LightGray" AlternatingRowBackground="White" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Сайт" Width="1*"/>
+                            <DataGridTextColumn Header="Логин" Width="2*"/>
+                            <DataGridTextColumn Header="Пароль" Width="2*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Добавить" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16"/>
-            <TabItem Header="Настройки" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16">
-                <Grid Background="#FFE5E5E5">
-                    <Label Content="Мастер-пароль" Margin="302,51,300,283" FontSize="22" FontFamily="Calibri" Background="Transparent" HorizontalContentAlignment="Center">
+            <TabItem Header="Добавить" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="74,0,-117,-2">
+                <Grid Background="#FFE8EAEE">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="721*"/>
+                        <ColumnDefinition Width="57*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Background="#FFCED7E6" TextWrapping="Wrap" Margin="114,137,447,205" BorderBrush="#FF588ADE" FontSize="18"/>
+                    <TextBox Background="#FFCED7E6" TextWrapping="Wrap" Margin="289,137,272,205" BorderBrush="#FF588ADE" FontSize="18"/>
+                    <TextBox Background="#FFCED7E6" TextWrapping="Wrap" Margin="464,137,97,205" BorderBrush="#FF588ADE" FontSize="18"/>
+                    <Label HorizontalContentAlignment="Center" Content="Сайт" HorizontalAlignment="Left" Margin="114,102,0,0" VerticalAlignment="Top" Width="160" FontWeight="Bold"/>
+                    <Label HorizontalContentAlignment="Center" Content="Логин" HorizontalAlignment="Left" Margin="289,102,0,0" VerticalAlignment="Top" Width="160" FontWeight="Bold"/>
+                    <Label HorizontalContentAlignment="Center" Content="Пароль" HorizontalAlignment="Left" Margin="464,102,0,0" VerticalAlignment="Top" Width="160" FontWeight="Bold"/>
+                    <Button Content="Сохранить" Margin="275,195,256,135" Background="#FF9DB3D8" BorderBrush="#FF588ADE"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Настройки" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="541,0,-547,-2">
+                <Grid Background="#FFE8EAEE">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="173*"/>
+                        <ColumnDefinition Width="605*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Мастер-пароль" Margin="129,105,300,229" FontSize="22" FontFamily="Calibri" Background="Transparent" HorizontalContentAlignment="Center" Grid.Column="1">
                         <Label.ToolTip>
                             <ToolTip Content="Используется для шифрования и дешифрования данных"/>
                         </Label.ToolTip>
                     </Label>
-                    <PasswordBox HorizontalAlignment="Left" Margin="302,91,0,0" VerticalAlignment="Top" Width="176" Height="30" FontSize="20"/>
-                    <Button Content="Установить" HorizontalAlignment="Left" Margin="221,126,0,0" VerticalAlignment="Top" Width="160"/>
-                    <Button Content="Проверить" HorizontalAlignment="Left" Margin="396,126,0,0" VerticalAlignment="Top" Width="160"/>
+                    <PasswordBox HorizontalAlignment="Left" Margin="129,141,0,0" VerticalAlignment="Top" Width="176" Height="30" FontSize="20" Background="#FFCED7E6" BorderBrush="#FF588ADE" Grid.Column="1"/>
+                    <Button Content="Установить" HorizontalAlignment="Left" Margin="48,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="1"/>
+                    <Button Content="Проверить" HorizontalAlignment="Left" Margin="223,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="1"/>
                 </Grid>
             </TabItem>
         </TabControl>
