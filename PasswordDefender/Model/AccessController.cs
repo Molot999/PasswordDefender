@@ -16,7 +16,7 @@ namespace PasswordDefender.Model
             byte[] hashToCheck = new byte[Convert.ToByte(new FileInfo(_masterPasswordFile).Length)];
             await new FileStream(_masterPasswordFile, FileMode.Open, FileAccess.Read).ReadAsync(hashToCheck, 0, hashToCheck.Length);
 
-                return File.ReadAllBytes(_masterPasswordFile).SequenceEqual(hashToCheck);
+                return GetMasterPassword().SequenceEqual(hashToCheck);
         }
 
         public static async void SetMasterPassword(string masterPassword) // Сохранить мастер-пароль в файл
