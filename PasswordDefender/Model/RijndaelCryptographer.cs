@@ -6,25 +6,23 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace PasswordDefenderTest
+namespace PasswordDefender.Model
 {
-    class Program
+    class RijndaelCryptographer : Сryptographer
     {
-
-        static readonly string _masterPasswordFile = Environment.CurrentDirectory + @"\dt1";
-
-        static byte[] _IV;
-        static byte[] _Key;
-
         readonly static string _keyFilePath = $@"{Environment.CurrentDirectory}\dtK";
         readonly static string _IVFilePath = $@"{Environment.CurrentDirectory}\dtIV";
-        static void Main(string[] args)
-        {
-            RijndaelManaged _rijndael = new RijndaelManaged();
 
-            using (_rijndael)
+        static RijndaelManaged _rijndael = new RijndaelManaged();
+        
+        byte[] _IV = File.ReadAllBytes(_IVFilePath) ?? null;
+        byte[] _Key = File.ReadAllBytes(_keyFilePath) ?? null;
+
+        public Data EncryptData(Data data)
+        {
+           using (_rijndael)
             {
-                //if (File.Exists == false)
+                if (_Key == null)
                 {
                     _rijndael.GenerateKey();
 
@@ -32,7 +30,7 @@ namespace PasswordDefenderTest
                         writeNewKeyStream.Write(_rijndael.Key, 0, _rijndael.Key.Length);
                 }
 
-                if (File.ReadAllBytes(_IVFilePath) == null)
+                if (_IV == null)
                 {
                     _rijndael.GenerateIV();
 
@@ -44,33 +42,44 @@ namespace PasswordDefenderTest
 
                 using (MemoryStream memoryStreamOfEncryptor = new MemoryStream())
                 {
+                    memoryStreamOfEncryptor.
                     using (CryptoStream csEncrypt = new CryptoStream(memoryStreamOfEncryptor, rijndaelEncryptor, CryptoStreamMode.Write))
                     {
                         using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
                         {
 
-                            swEncrypt.Write(new Data("larik", "larik123").login);
+                            swEncrypt.Write();
                         }
-                        byte[] encrypted = memoryStreamOfEncryptor.ToArray();
-                        foreach (byte b in encrypted)
-                            Console.WriteLine(b);
+                        encrypted = msEncrypt.ToArray();
+                        csEncrypt.
                     }
                 }
 
             }
 
+            return data;
         }
 
-        class Data
+        public Data DecryptData(Data data)
         {
-            public string login { get; set; }
-            public string password { get; set; }
-
-            public Data(string login, string password)
+            using (_rijndael)
             {
-                this.login = login;
-                this.password = password;
+
             }
+
+            return data;
         }
+
+        void SetIV()
+        {
+            _rijndael.
+            
+        }
+
+        void SetKey()
+        {
+
+        }
+
     }
 }
