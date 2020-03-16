@@ -8,8 +8,8 @@ namespace PasswordDefender.Model
 {
     interface Сryptographer
     {
-        Data EncryptData(Data data); // Метод, дешифрующий свойства класса Data
+        Data GetEncryptedData(Data data); // Метод, дешифрующий свойства класса Data
 
-        Data DecryptData(Data data); // Метод, шифрующий свойства класса Data
+        Data GetDecryptedData(Data data); // Метод, шифрующий свойства класса Data
     }
 }

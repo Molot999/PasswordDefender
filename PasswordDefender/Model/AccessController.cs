@@ -10,19 +10,30 @@ namespace PasswordDefender.Model
 {
     static class AccessController // Класс, позволяющий установить или получить существующий мастер пароль
     {
-        static readonly string _masterPasswordFilePath = $@"{Environment.CurrentDirectory}\dt1";
-        public static async Task<bool> CheckMasterPassword(string masterPassword) // Проверить мастер-пароль. Возвращает true, если мастер-пароли совпадают
-        {
-            byte[] hashToCheck = new byte[Convert.ToByte(new FileInfo(_masterPasswordFilePath).Length)];
-            await new FileStream(_masterPasswordFilePath, FileMode.Open, FileAccess.Read).ReadAsync(hashToCheck, 0, hashToCheck.Length);
+        public static string MasterPassword { get; private set; }
+        public static string MasterPasswordFilePath { get; } = $@"{Environment.CurrentDirectory}\dt1";
 
-                return GetMasterPassword().SequenceEqual(hashToCheck);
+        public static bool CheckMasterPassword(string masterPassword) // Проверить мастер-пароль. Возвращает true, если мастер-пароли совпадают
+        {
+            byte[] hashToCheck = new byte[Convert.ToByte(new FileInfo(MasterPasswordFilePath).Length)];
+            new FileStream(MasterPasswordFilePath, FileMode.Open, FileAccess.Read).ReadAsync(hashToCheck, 0, hashToCheck.Length);
+
+            bool isMasterPasswordRight = GetMasterPassword().SequenceEqual(hashToCheck);
+
+            if (isMasterPasswordRight == true)
+            {
+                MasterPassword = masterPassword;
+            }
+
+                return isMasterPasswordRight;
         }
 
         public static async void SetMasterPassword(string masterPassword) // Сохранить мастер-пароль в файл
         {
+            MasterPassword = masterPassword;
+
             byte[] hashOfMasterPassword = EncryptMasterPassword(masterPassword);
-            await new FileStream(_masterPasswordFilePath, FileMode.OpenOrCreate, FileAccess.Write).WriteAsync(hashOfMasterPassword, 0, hashOfMasterPassword.Length); // Записываем массив байтов в файл
+            await new FileStream(MasterPasswordFilePath, FileMode.OpenOrCreate, FileAccess.Write).WriteAsync(hashOfMasterPassword, 0, hashOfMasterPassword.Length); // Записываем массив байтов в файл
         }
 
         static byte[] EncryptMasterPassword(string masterPassword) // Зашифровать мастер-пароль
@@ -32,7 +43,7 @@ namespace PasswordDefender.Model
 
         static byte[] GetMasterPassword() // Получить хэш-код мастер-пароля из файла
         {
-            return File.ReadAllBytes(_masterPasswordFilePath);
+            return File.ReadAllBytes(MasterPasswordFilePath);
         }
 
     }

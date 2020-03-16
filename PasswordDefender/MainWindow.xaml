@@ -51,9 +51,9 @@
                             <ToolTip Content="Используется для шифрования и дешифрования данных"/>
                         </Label.ToolTip>
                     </Label>
-                    <PasswordBox HorizontalAlignment="Left" Margin="129,141,0,0" VerticalAlignment="Top" Width="176" Height="30" FontSize="20" Background="#FFCED7E6" BorderBrush="#FF588ADE" Grid.Column="1"/>
-                    <Button Content="Установить" HorizontalAlignment="Left" Margin="48,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="1"/>
-                    <Button Content="Проверить" HorizontalAlignment="Left" Margin="223,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="1" IsEnabled="False"/>
+                    <PasswordBox x:Name="MasterPasswordBox" HorizontalAlignment="Left" Margin="129,141,0,0" VerticalAlignment="Top" Width="176" Height="30" FontSize="20" Background="#FFCED7E6" BorderBrush="#FF588ADE" Grid.Column="1"/>
+                    <Button x:Name="SetMasterPasswordButton" Content="Установить" HorizontalAlignment="Left" Margin="48,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="1" Click="SetMasterPasswordButton_Click"/>
+                    <Button x:Name="CheckMasterPasswordButton" Content="Проверить" HorizontalAlignment="Left" Margin="223,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="1" Click="CheckMasterPasswordButton_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

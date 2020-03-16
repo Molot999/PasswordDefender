@@ -18,46 +18,24 @@ namespace PasswordDefenderTest
 
         readonly static string _keyFilePath = $@"{Environment.CurrentDirectory}\dtK";
         readonly static string _IVFilePath = $@"{Environment.CurrentDirectory}\dtIV";
+
+        static string password = "larik125tre3423";
         static void Main(string[] args)
         {
             RijndaelManaged _rijndael = new RijndaelManaged();
 
-            using (_rijndael)
+            _rijndael.GenerateKey();
+
+            var t = Encoding.UTF8.GetBytes(password);
+            int a = 0;
+
+            for (int i = 0; i < t.Length - 1; i++)
             {
-                //if (File.Exists == false)
-                {
-                    _rijndael.GenerateKey();
-
-                    using (FileStream writeNewKeyStream = File.Create(_keyFilePath))
-                        writeNewKeyStream.Write(_rijndael.Key, 0, _rijndael.Key.Length);
-                }
-
-                if (File.ReadAllBytes(_IVFilePath) == null)
-                {
-                    _rijndael.GenerateIV();
-
-                    using (FileStream writeNewIVStream = File.Create(_IVFilePath))
-                        writeNewIVStream.Write(_rijndael.IV, 0, _rijndael.IV.Length);
-                }
-
-                ICryptoTransform rijndaelEncryptor = _rijndael.CreateEncryptor(_Key, _IV);
-
-                using (MemoryStream memoryStreamOfEncryptor = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(memoryStreamOfEncryptor, rijndaelEncryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-
-                            swEncrypt.Write(new Data("larik", "larik123").login);
-                        }
-                        byte[] encrypted = memoryStreamOfEncryptor.ToArray();
-                        foreach (byte b in encrypted)
-                            Console.WriteLine(b);
-                    }
-                }
-
+                a += (int)t[i];
             }
+
+            Console.WriteLine(a);
+            Console.Read();
 
         }
 
