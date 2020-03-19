@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace PasswordDefender.Model
+namespace PasswordDefenderTest.Model
 {
     public class RijndaelCryptographer : Cryptographer
     {
@@ -65,11 +65,14 @@ namespace PasswordDefender.Model
                             swEncrypt.WriteLine(dataToEncrypt.site);
                             dataToEncrypt.site = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
 
+                            Console.WriteLine(memoryStreamOfEncryptor.ToArray().Length);
+
                             swEncrypt.Write(dataToEncrypt.login);
                             dataToEncrypt.login = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
 
                             swEncrypt.Write(dataToEncrypt.password);
                             dataToEncrypt.password = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
+
                         }
                        
                     }

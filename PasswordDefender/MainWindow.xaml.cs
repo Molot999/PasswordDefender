@@ -80,10 +80,9 @@ namespace PasswordDefender
             Data newData = new Data(siteForNewData, loginForNewData, passwordForNewData);
 
             Cryptographer cryptographer = new RijndaelCryptographer();
-            cryptographer.GetEncryptedData(newData);
+            cryptographer.EncryptData(newData);
 
-
-            
+            DataFileManager.SaveDataToFile(newData);
 
             MessageBox.Show("Данные зашифрованы и сохранены");
 
