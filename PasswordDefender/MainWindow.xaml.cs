@@ -18,9 +18,6 @@ using System.IO;
 
 namespace PasswordDefender
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
 
@@ -59,15 +56,36 @@ namespace PasswordDefender
 
                 if (b == true)
                 {
-                    MessageBox.Show(b.ToString());
-                    //CheckMasterPasswordButton.IsEnabled = false;
+                    MessageBox.Show("Мастер-пароль введен верно");
+                    CheckMasterPasswordButton.IsEnabled = false;
                 }
                 else
-                    MessageBox.Show(b.ToString());
+                    MessageBox.Show("Мастер-пароль НЕ верен!");
             }
 
             else
                 MessageBox.Show("Строка пустая!");
+
+        }
+
+        private void SaveNewDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            string siteForNewData = SiteOfDataBox.Text;
+            string loginForNewData = LoginOfDataBox.Text;
+            string passwordForNewData = PasswordOfDataBox.Text;
+
+            if (string.IsNullOrEmpty(siteForNewData) && string.IsNullOrEmpty(loginForNewData) && string.IsNullOrEmpty(passwordForNewData))
+                MessageBox.Show("Укажите значения для каждого поля!");
+
+            Data newData = new Data(siteForNewData, loginForNewData, passwordForNewData);
+
+            Cryptographer cryptographer = new RijndaelCryptographer();
+            cryptographer.GetEncryptedData(newData);
+
+
+            
+
+            MessageBox.Show("Данные зашифрованы и сохранены");
 
         }
     }

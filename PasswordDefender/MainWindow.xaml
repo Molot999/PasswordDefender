@@ -31,13 +31,13 @@
                         <ColumnDefinition Width="721*"/>
                         <ColumnDefinition Width="57*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Background="#FFCED7E6" TextWrapping="Wrap" Margin="114,137,447,205" BorderBrush="#FF588ADE" FontSize="18"/>
-                    <TextBox Background="#FFCED7E6" TextWrapping="Wrap" Margin="289,137,272,205" BorderBrush="#FF588ADE" FontSize="18"/>
-                    <TextBox Background="#FFCED7E6" TextWrapping="Wrap" Margin="464,137,97,205" BorderBrush="#FF588ADE" FontSize="18"/>
+                    <TextBox x:Name="SiteOfDataBox" Background="#FFCED7E6" TextWrapping="Wrap" Margin="114,137,447,205" BorderBrush="#FF588ADE" FontSize="18"/>
+                    <TextBox x:Name="LoginOfDataBox" Background="#FFCED7E6" TextWrapping="Wrap" Margin="289,137,272,205" BorderBrush="#FF588ADE" FontSize="18"/>
+                    <TextBox x:Name="PasswordOfDataBox" Background="#FFCED7E6" TextWrapping="Wrap" Margin="464,137,97,205" BorderBrush="#FF588ADE" FontSize="18"/>
                     <Label HorizontalContentAlignment="Center" Content="Сайт" HorizontalAlignment="Left" Margin="114,102,0,0" VerticalAlignment="Top" Width="160" FontWeight="Bold"/>
                     <Label HorizontalContentAlignment="Center" Content="Логин" HorizontalAlignment="Left" Margin="289,102,0,0" VerticalAlignment="Top" Width="160" FontWeight="Bold"/>
                     <Label HorizontalContentAlignment="Center" Content="Пароль" HorizontalAlignment="Left" Margin="464,102,0,0" VerticalAlignment="Top" Width="160" FontWeight="Bold"/>
-                    <Button Content="Сохранить" Margin="275,195,256,135" Background="#FF9DB3D8" BorderBrush="#FF588ADE"/>
+                    <Button x:Name="SaveNewDataButton" Content="Сохранить" Margin="275,195,256,135" Background="#FF9DB3D8" BorderBrush="#FF588ADE" Click="SaveNewDataButton_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Настройки" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="541,0,-547,-2">

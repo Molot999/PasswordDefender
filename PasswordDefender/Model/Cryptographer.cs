@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PasswordDefender.Model
 {
-    interface Сryptographer
+    public interface Cryptographer
     {
         Data GetEncryptedData(Data data); // Метод, дешифрующий свойства класса Data
 

@@ -8,14 +8,17 @@ using System.IO;
 
 namespace PasswordDefender.Model
 {
-    class RijndaelCryptographer : Сryptographer
+    public class RijndaelCryptographer : Cryptographer
     {
         readonly static string _keyFilePath = $@"{Environment.CurrentDirectory}\dtK";
         readonly static string _IVFilePath = $@"{Environment.CurrentDirectory}\dtIV";
 
-        static readonly RijndaelManaged _rijndael = new RijndaelManaged();
+        readonly static RijndaelManaged _rijndael = new RijndaelManaged();
 
-        public Data GetEncryptedData(Data data)
+        byte[] _IV;
+        byte[] _Key;
+
+        public Data GetEncryptedData(Data dataToEncrypt)
         {
             using (_rijndael)
             {
@@ -28,11 +31,14 @@ namespace PasswordDefender.Model
                     {
                         using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
                         {
-                            swEncrypt.Write(data.login);
-                            data.login = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
+                            swEncrypt.WriteLine(dataToEncrypt.site);
+                            dataToEncrypt.site = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
 
-                            swEncrypt.Write(data.password);
-                            data.password = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
+                            swEncrypt.Write(dataToEncrypt.login);
+                            dataToEncrypt.login = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
+
+                            swEncrypt.Write(dataToEncrypt.password);
+                            dataToEncrypt.password = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
                         }
                         
                     }
@@ -40,7 +46,7 @@ namespace PasswordDefender.Model
 
             }
 
-            return data;
+            return dataToEncrypt;
 
         }
 

@@ -15,8 +15,7 @@ namespace PasswordDefender.Model
 
         public static bool CheckMasterPassword(string masterPassword) // Проверить мастер-пароль. Возвращает true, если мастер-пароли совпадают
         {
-            byte[] hashToCheck = new byte[Convert.ToByte(new FileInfo(MasterPasswordFilePath).Length)];
-            new FileStream(MasterPasswordFilePath, FileMode.Open, FileAccess.Read).ReadAsync(hashToCheck, 0, hashToCheck.Length);
+            byte[] hashToCheck = EncryptMasterPassword(masterPassword);
 
             bool isMasterPasswordRight = GetMasterPassword().SequenceEqual(hashToCheck);
 
@@ -25,15 +24,15 @@ namespace PasswordDefender.Model
                 MasterPassword = masterPassword;
             }
 
-                return isMasterPasswordRight;
+            return isMasterPasswordRight;
         }
 
-        public static async void SetMasterPassword(string masterPassword) // Сохранить мастер-пароль в файл
+        public static void SetMasterPassword(string masterPassword) // Сохранить мастер-пароль в файл
         {
             MasterPassword = masterPassword;
 
             byte[] hashOfMasterPassword = EncryptMasterPassword(masterPassword);
-            await new FileStream(MasterPasswordFilePath, FileMode.OpenOrCreate, FileAccess.Write).WriteAsync(hashOfMasterPassword, 0, hashOfMasterPassword.Length); // Записываем массив байтов в файл
+            _ = new FileStream(MasterPasswordFilePath, FileMode.OpenOrCreate, FileAccess.Write).WriteAsync(hashOfMasterPassword, 0, hashOfMasterPassword.Length); // Записываем массив байтов в файл
         }
 
         static byte[] EncryptMasterPassword(string masterPassword) // Зашифровать мастер-пароль

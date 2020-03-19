@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PasswordDefender.Model
 {
-    class Data // Модель данных, подлежащих шифрованию и дешифрованию
+    public class Data // Модель данных, подлежащих шифрованию и дешифрованию
     {
         public Data(string site, string login, string password)
         {
