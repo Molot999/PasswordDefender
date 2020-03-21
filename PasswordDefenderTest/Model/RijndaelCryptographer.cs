@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace PasswordDefenderTest.Model
+namespace PasswordDefender.Model
 {
     public class RijndaelCryptographer : Cryptographer
     {
@@ -14,9 +14,11 @@ namespace PasswordDefenderTest.Model
         readonly static string _IVFilePath = $@"{Environment.CurrentDirectory}\dtIV";
 
         readonly static RijndaelManaged _rijndael = new RijndaelManaged();
+        ICryptoTransform _rijndaelEncryptor;
+        ICryptoTransform _rijndaelDecryptor;
 
-        byte[] _IV;
-        byte[] _Key;
+        static byte[] _IV;
+        static byte[] _Key;
 
 
         public byte[] IV 
@@ -33,6 +35,7 @@ namespace PasswordDefenderTest.Model
             
         }
 
+
         public byte[] Key
         {
 
@@ -47,38 +50,14 @@ namespace PasswordDefenderTest.Model
 
         }
 
-
         public void EncryptData(Data dataToEncrypt)
         {
             using (_rijndael)
-            {              
-                ICryptoTransform rijndaelEncryptor = _rijndael.CreateEncryptor(Key, IV);
-
-                using (MemoryStream memoryStreamOfEncryptor = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(memoryStreamOfEncryptor, rijndaelEncryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(dataToEncrypt.site);
-
-                            /*
-                            Console.WriteLine(memoryStreamOfEncryptor.ToArray().Length);
-
-                            swEncrypt.Write(dataToEncrypt.login);
-                            dataToEncrypt.login = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
-
-                            swEncrypt.Write(dataToEncrypt.password);
-                            dataToEncrypt.password = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
-                            */
-
-                        }
-
-                        var site = memoryStreamOfEncryptor.ToArray();
-
-
-                    }
-                }
+            {          
+                
+                dataToEncrypt.site = EncryptProperty(dataToEncrypt.site);
+                dataToEncrypt.login = EncryptProperty(dataToEncrypt.login);
+                dataToEncrypt.password = EncryptProperty(dataToEncrypt.password);
 
             }
 
@@ -89,26 +68,11 @@ namespace PasswordDefenderTest.Model
 
             using (_rijndael)
             {
-                ICryptoTransform rijndaelEncryptor = _rijndael.CreateEncryptor(GetKey(), GetIV());
 
-                using (MemoryStream memoryStreamOfEncryptor = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(memoryStreamOfEncryptor, rijndaelEncryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.WriteLine(dataToDecrypt.site);
-                            dataToDecrypt.site = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
+                dataToDecrypt.site = DecryptProperty(dataToDecrypt.site);
+                dataToDecrypt.login = DecryptProperty(dataToDecrypt.login);
+                dataToDecrypt.password = DecryptProperty(dataToDecrypt.password);
 
-                            swEncrypt.Write(dataToDecrypt.login);
-                            dataToDecrypt.login = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
-
-                            swEncrypt.Write(dataToDecrypt.password);
-                            dataToDecrypt.password = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
-                        }
-
-                    }
-                }
             }
 
         }
@@ -157,6 +121,51 @@ namespace PasswordDefenderTest.Model
                 writeNewKeyStream.Write(_rijndael.Key, 0, _rijndael.Key.Length);
 
             _Key = _rijndael.Key;
+
+        }
+
+        string EncryptProperty(string propertyOfData)
+        {
+
+            if (_rijndaelEncryptor == null)
+                 _rijndaelEncryptor = _rijndael.CreateEncryptor(Key, IV);
+
+            using (MemoryStream memoryStreamOfEncryptor = new MemoryStream())
+            {
+                using (CryptoStream csEncrypt = new CryptoStream(memoryStreamOfEncryptor, _rijndaelEncryptor, CryptoStreamMode.Write))
+                {
+                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                    {
+                        swEncrypt.WriteLine(propertyOfData);
+                    }
+
+                    return Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
+
+                }
+            }
+        }
+
+        string DecryptProperty(string propertyOfData)
+        {
+
+            if (_rijndaelDecryptor == null)
+                _rijndaelDecryptor = _rijndael.CreateDecryptor(Key, IV);
+
+            string decryptedProperty = null;
+
+            using (MemoryStream memoryStreamOfDecryptor = new MemoryStream(Encoding.UTF8.GetBytes(propertyOfData)))
+            {
+                using (CryptoStream csDecrypt = new CryptoStream(memoryStreamOfDecryptor, _rijndaelDecryptor, CryptoStreamMode.Read))
+                {
+                    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                    {
+                        decryptedProperty = srDecrypt.ReadToEnd();
+                    }
+                                        
+                }
+            }
+
+            return decryptedProperty;
 
         }
 

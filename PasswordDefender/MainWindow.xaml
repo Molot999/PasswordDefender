@@ -15,12 +15,12 @@
                         <ColumnDefinition Width="56*"/>
                     </Grid.ColumnDefinitions>
                     <Button Content="Удалить" HorizontalAlignment="Left" Margin="1,335,0,0" VerticalAlignment="Top" Width="101" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Column="1" IsEnabled="False"/>
-                    <DataGrid HorizontalAlignment="Center" Height="314" Margin="10,16,10,0" VerticalAlignment="Top" Width="758" HorizontalGridLinesBrush="DarkGray"
-    RowBackground="LightGray" AlternatingRowBackground="White" Grid.ColumnSpan="2">
+                    <DataGrid x:Name="AllDataGrid" HorizontalAlignment="Center" Height="314" Margin="10,16,10,0" VerticalAlignment="Top" Width="758" HorizontalGridLinesBrush="DarkGray"
+    RowBackground="LightGray" AlternatingRowBackground="White" Grid.ColumnSpan="2" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Сайт" Width="1*"/>
-                            <DataGridTextColumn Header="Логин" Width="2*"/>
-                            <DataGridTextColumn Header="Пароль" Width="2*"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Сайт" Width="1*" Binding="{Binding Path=site}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Логин" Width="2*" Binding="{Binding Path=login}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Пароль" Width="2*" Binding="{Binding Path=password}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

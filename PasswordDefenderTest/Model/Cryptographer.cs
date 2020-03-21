@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PasswordDefenderTest.Model
+namespace PasswordDefender.Model
 {
     public interface Cryptographer
     {

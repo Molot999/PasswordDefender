@@ -4,21 +4,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Newtonsoft.Json;
 
-namespace PasswordDefenderTest.Model
+namespace PasswordDefender.Model
 {
     static class DataFileManager // Класс, предоставляющий методы сохранения и получения зашифрованных данных
     {
-       /* public static void SaveDataToFile(Data dataToSave) 
+        readonly static string _dataFilesDirectory = $@"{Environment.CurrentDirectory}\data\";
+        public static void SaveDataToFile(Data dataToSave) 
         {
             string dataInJSONToSave = JsonConvert.SerializeObject(dataToSave);
 
-            using (TextWriter writeEncryptedDataToFileStream = new StreamWriter($@"{Environment.CurrentDirectory}\{dataInJSONToSave.GetHashCode()}"))
+            using (TextWriter writeEncryptedDataToFileStream = new StreamWriter($@"{_dataFilesDirectory}{ dataInJSONToSave.GetHashCode()}"))
                 writeEncryptedDataToFileStream.WriteLine(dataInJSONToSave);
         }
-        */
 
-        //public static Data UploadDataFromFile() { }
+        public static Data[] GetAllData()
+        {
+
+            string[] encryptedDataPaths = Directory.GetFiles(_dataFilesDirectory);
+
+            Data[] allDownloadedData = new Data[encryptedDataPaths.Length];
+
+            for (int i = 0; i <= encryptedDataPaths.Length - 1; i++)
+            {
+                using (TextReader readEncryptedDataFromDirectoryStream = new StreamReader(encryptedDataPaths[i]))
+                {
+                   Data downloadedData = JsonConvert.DeserializeObject<Data>(readEncryptedDataFromDirectoryStream.ReadToEnd());
+                   new RijndaelCryptographer().DecryptData(downloadedData);
+                   allDownloadedData[i] = downloadedData;
+                }
+            }
+
+
+
+            return allDownloadedData;
+        }
 
 
     }

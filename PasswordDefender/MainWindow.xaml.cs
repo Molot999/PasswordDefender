@@ -29,6 +29,8 @@ namespace PasswordDefender
             else
                 CheckMasterPasswordButton.IsEnabled = false;
 
+            AllDataGrid.ItemsSource = DataFileManager.GetAllData();
+
         }
 
         private void SetMasterPasswordButton_Click(object sender, RoutedEventArgs e)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PasswordDefenderTest.Model
+namespace PasswordDefender.Model
 {
     public class Data // Модель данных, подлежащих шифрованию и дешифрованию
     {

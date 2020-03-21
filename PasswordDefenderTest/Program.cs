@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using PasswordDefenderTest.Model;
 namespace PasswordDefenderTest
 {
     class Program
@@ -11,7 +10,8 @@ namespace PasswordDefenderTest
         static void Main ()
         {
 
-            Data newData = new Data("1232vc3", "12ew213", "1asfq3f23");
+            
+            /*Data newData = new Data("1232vc3", "12ew213", "1asfq3f23");
 
             Cryptographer cryptographer = new RijndaelCryptographer();
 
@@ -24,7 +24,7 @@ namespace PasswordDefenderTest
             
 
             //DataFileManager.SaveDataToFile(newData);
-
+            */
             Console.Read();
 
         }
