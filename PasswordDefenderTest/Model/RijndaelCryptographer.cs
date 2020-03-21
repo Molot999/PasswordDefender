@@ -19,7 +19,8 @@ namespace PasswordDefenderTest.Model
         byte[] _Key;
 
 
-        public byte[] IV {
+        public byte[] IV 
+        {
 
             get 
             {
@@ -32,9 +33,7 @@ namespace PasswordDefenderTest.Model
             
         }
 
-
         public byte[] Key
-
         {
 
             get
@@ -48,7 +47,6 @@ namespace PasswordDefenderTest.Model
 
         }
 
-    
 
         public void EncryptData(Data dataToEncrypt)
         {
@@ -62,9 +60,9 @@ namespace PasswordDefenderTest.Model
                     {
                         using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
                         {
-                            swEncrypt.WriteLine(dataToEncrypt.site);
-                            dataToEncrypt.site = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
+                            swEncrypt.Write(dataToEncrypt.site);
 
+                            /*
                             Console.WriteLine(memoryStreamOfEncryptor.ToArray().Length);
 
                             swEncrypt.Write(dataToEncrypt.login);
@@ -72,9 +70,13 @@ namespace PasswordDefenderTest.Model
 
                             swEncrypt.Write(dataToEncrypt.password);
                             dataToEncrypt.password = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
+                            */
 
                         }
-                       
+
+                        var site = memoryStreamOfEncryptor.ToArray();
+
+
                     }
                 }
 

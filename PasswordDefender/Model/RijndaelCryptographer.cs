@@ -19,7 +19,8 @@ namespace PasswordDefender.Model
         byte[] _Key;
 
 
-        public byte[] IV {
+        public byte[] IV 
+        {
 
             get 
             {
@@ -34,7 +35,6 @@ namespace PasswordDefender.Model
 
 
         public byte[] Key
-
         {
 
             get
@@ -47,8 +47,6 @@ namespace PasswordDefender.Model
             }
 
         }
-
-    
 
         public void EncryptData(Data dataToEncrypt)
         {
@@ -86,24 +84,7 @@ namespace PasswordDefender.Model
             {
                 ICryptoTransform rijndaelEncryptor = _rijndael.CreateEncryptor(GetKey(), GetIV());
 
-                using (MemoryStream memoryStreamOfEncryptor = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(memoryStreamOfEncryptor, rijndaelEncryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.WriteLine(dataToDecrypt.site);
-                            dataToDecrypt.site = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
-
-                            swEncrypt.Write(dataToDecrypt.login);
-                            dataToDecrypt.login = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
-
-                            swEncrypt.Write(dataToDecrypt.password);
-                            dataToDecrypt.password = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
-                        }
-
-                    }
-                }
+                
             }
 
         }
@@ -153,6 +134,22 @@ namespace PasswordDefender.Model
 
             _Key = _rijndael.Key;
 
+        }
+
+        byte[] EncryptProperty(string propertyOfData, ICryptoTransform rjandaelEncryptor)
+        {
+            using (MemoryStream memoryStreamOfEncryptor = new MemoryStream())
+            {
+                using (CryptoStream csEncrypt = new CryptoStream(memoryStreamOfEncryptor, rijndaelEncryptor, CryptoStreamMode.Write))
+                {
+                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                    {
+                        swEncrypt.WriteLine(dataToDecrypt.site);
+                        dataToDecrypt.site = Encoding.UTF8.GetString(memoryStreamOfEncryptor.ToArray());
+                    }
+
+                }
+            }
         }
 
     }
