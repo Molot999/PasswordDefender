@@ -29,8 +29,6 @@ namespace PasswordDefender
             else
                 CheckMasterPasswordButton.IsEnabled = false;
 
-            AllDataGrid.ItemsSource = DataFileManager.GetAllData();
-
         }
 
         private void SetMasterPasswordButton_Click(object sender, RoutedEventArgs e)
@@ -79,15 +77,26 @@ namespace PasswordDefender
             if (string.IsNullOrEmpty(siteForNewData) && string.IsNullOrEmpty(loginForNewData) && string.IsNullOrEmpty(passwordForNewData))
                 MessageBox.Show("Укажите значения для каждого поля!");
 
-            Data newData = new Data(siteForNewData, loginForNewData, passwordForNewData);
+            else
+            {
+                Data newData = new Data(siteForNewData, loginForNewData, passwordForNewData);
 
-            Cryptographer cryptographer = new RijndaelCryptographer();
-            cryptographer.EncryptData(newData);
+                //List<Data> newListOfData = AllDataGrid.Items.SourceCollection.
+               // AllDataGrid.ItemsSource
 
-            DataFileManager.SaveDataToFile(newData);
+                Cryptographer cryptographer = new RijndaelCryptographer();
+                cryptographer.EncryptData(newData);
 
-            MessageBox.Show("Данные зашифрованы и сохранены");
+                DataFileManager.SaveDataToFile(newData);
 
+                MessageBox.Show("Данные зашифрованы и сохранены");
+            }
+
+        }
+
+        private void UpdateDataGrid_Click(object sender, RoutedEventArgs e)
+        {
+            AllDataGrid.ItemsSource = DataFileManager.GetAllData();
         }
     }
 }

@@ -11,18 +11,20 @@
             <TabItem Header="Данные" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="10,0,-64,-2">
                 <Grid Background="#FFE8EAEE">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="333*"/>
-                        <ColumnDefinition Width="56*"/>
+                        <ColumnDefinition Width="666*"/>
+                        <ColumnDefinition Width="103*"/>
+                        <ColumnDefinition Width="9*"/>
                     </Grid.ColumnDefinitions>
                     <Button Content="Удалить" HorizontalAlignment="Left" Margin="1,335,0,0" VerticalAlignment="Top" Width="101" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Column="1" IsEnabled="False"/>
-                    <DataGrid x:Name="AllDataGrid" HorizontalAlignment="Center" Height="314" Margin="10,16,10,0" VerticalAlignment="Top" Width="758" HorizontalGridLinesBrush="DarkGray"
-    RowBackground="LightGray" AlternatingRowBackground="White" Grid.ColumnSpan="2" AutoGenerateColumns="False">
+                    <DataGrid x:Name="AllDataGrid" HorizontalAlignment="Center" Height="314" Margin="10,16,1,0" VerticalAlignment="Top" Width="758" HorizontalGridLinesBrush="DarkGray"
+    RowBackground="#FF9DB3D8" AlternatingRowBackground="White" Grid.ColumnSpan="2" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn IsReadOnly="True" Header="Сайт" Width="1*" Binding="{Binding Path=site}"/>
                             <DataGridTextColumn IsReadOnly="True" Header="Логин" Width="2*" Binding="{Binding Path=login}"/>
                             <DataGridTextColumn IsReadOnly="True" Header="Пароль" Width="2*" Binding="{Binding Path=password}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Button x:Name="UpdateDataGrid" Content="Обновить" HorizontalAlignment="Left" Margin="556,337,0,0" VerticalAlignment="Top" Width="101" Height="22" Background="#FF9DB3D8" BorderBrush="#FF588ADE" Click="UpdateDataGrid_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Добавить" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="74,0,-117,-2">

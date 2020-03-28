@@ -18,5 +18,7 @@ namespace PasswordDefender.Model
         public string site { get; set; }
         public string login { get; set; }
         public string password { get; set; }
+
+        string masterPassword;
     }
 }

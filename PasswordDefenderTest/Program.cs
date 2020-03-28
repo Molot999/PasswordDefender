@@ -10,21 +10,14 @@ namespace PasswordDefenderTest
         static void Main ()
         {
 
-            
-            /*Data newData = new Data("1232vc3", "12ew213", "1asfq3f23");
 
-            Cryptographer cryptographer = new RijndaelCryptographer();
+            string str = Console.ReadLine();
 
-            Console.WriteLine(newData.site);
-            Console.WriteLine(newData.login);
-            Console.WriteLine(newData.password + "\n");
+            if (str.Length == 0)
+                Console.WriteLine("Пон нулям");
 
-            cryptographer.EncryptData(newData);
+            Console.WriteLine("Бу");
 
-            
-
-            //DataFileManager.SaveDataToFile(newData);
-            */
             Console.Read();
 
         }
