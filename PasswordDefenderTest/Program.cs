@@ -3,20 +3,17 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using PasswordDefenderTest.Model;
+
 namespace PasswordDefenderTest
 {
     class Program
     {
         static void Main ()
         {
-
-
-            string str = Console.ReadLine();
-
-            if (str.Length == 0)
-                Console.WriteLine("Пон нулям");
-
-            Console.WriteLine("Бу");
+            AccessController.CheckMasterPassword("larik");
+            Data[] data = DataFileManager.GetAllData();
+            Console.WriteLine("(" + data[0].masterPassword + ")");
 
             Console.Read();
 

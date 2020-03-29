@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace PasswordDefender.Model
+namespace PasswordDefenderTest.Model
 {
     public class RijndaelCryptographer : Cryptographer
     {
@@ -80,7 +80,7 @@ namespace PasswordDefender.Model
                 }
                 else
                 {
-                    dataToDecrypt.masterPassword = "Ошибка! Несоответствие мастер-пароля!";
+                    dataToDecrypt.masterPassword = $"{masterPasswordInData}";
                     dataToDecrypt.site = "Ошибка! Несоответствие мастер-пароля!";
                     dataToDecrypt.login = "Ошибка! Несоответствие мастер-пароля!";
                     dataToDecrypt.password = "Ошибка! Несоответствие мастер-пароля!";
@@ -152,7 +152,7 @@ namespace PasswordDefender.Model
                         swEncrypt.WriteLine(propertyOfData);
                     }
 
-                    return  Convert.ToBase64String(memoryStreamOfEncryptor.ToArray());
+                    return Convert.ToBase64String(memoryStreamOfEncryptor.ToArray());
 
                 }
             }

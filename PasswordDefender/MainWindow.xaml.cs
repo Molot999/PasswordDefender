@@ -81,7 +81,7 @@ namespace PasswordDefender
 
             else
             {
-                if (AccessController.MasterPassword.Length != 0)
+                if (AccessController.MasterPassword != null)
                 {
                     Data newData = new Data(siteForNewData, loginForNewData, passwordForNewData, AccessController.MasterPassword);
 
@@ -93,6 +93,9 @@ namespace PasswordDefender
 
                     DataFileManager.SaveDataToFile(newData);
 
+                    SiteOfDataBox.Text = "";
+                    LoginOfDataBox.Text = "";
+                    PasswordOfDataBox.Text = "";
                     MessageBox.Show("Данные зашифрованы и сохранены");
                 }
 
