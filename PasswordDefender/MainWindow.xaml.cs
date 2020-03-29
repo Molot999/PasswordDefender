@@ -39,6 +39,7 @@ namespace PasswordDefender
             {
                 AccessController.SetMasterPassword(_masterPasswordInPasswordBox);
                 SetMasterPasswordButton.IsEnabled = false;
+                MasterPasswordBox.IsEnabled = false;
                 MessageBox.Show("Мастер-пароль установлен");
             }
             else
@@ -58,6 +59,7 @@ namespace PasswordDefender
                 {
                     MessageBox.Show("Мастер-пароль введен верно");
                     CheckMasterPasswordButton.IsEnabled = false;
+                    MasterPasswordBox.IsEnabled = false;
                 }
                 else
                     MessageBox.Show("Мастер-пароль НЕ верен!");
@@ -79,24 +81,44 @@ namespace PasswordDefender
 
             else
             {
-                Data newData = new Data(siteForNewData, loginForNewData, passwordForNewData);
+                if (AccessController.MasterPassword.Length != 0)
+                {
+                    Data newData = new Data(siteForNewData, loginForNewData, passwordForNewData, AccessController.MasterPassword);
 
-                //List<Data> newListOfData = AllDataGrid.Items.SourceCollection.
-               // AllDataGrid.ItemsSource
+                    //List<Data> newListOfData = AllDataGrid.Items.SourceCollection.
+                    // AllDataGrid.ItemsSource
 
-                Cryptographer cryptographer = new RijndaelCryptographer();
-                cryptographer.EncryptData(newData);
+                    Cryptographer cryptographer = new RijndaelCryptographer();
+                    cryptographer.EncryptData(newData);
 
-                DataFileManager.SaveDataToFile(newData);
+                    DataFileManager.SaveDataToFile(newData);
 
-                MessageBox.Show("Данные зашифрованы и сохранены");
+                    MessageBox.Show("Данные зашифрованы и сохранены");
+                }
+
+                else
+                    MessageBox.Show("Подтвердите мастер-пароль в разделе \"НАСТРОЙКИ\"!");
+
+
             }
 
         }
 
         private void UpdateDataGrid_Click(object sender, RoutedEventArgs e)
         {
-            AllDataGrid.ItemsSource = DataFileManager.GetAllData();
+            if (AccessController.MasterPassword != null)
+            {
+                Data[] receivedData = DataFileManager.GetAllData();
+
+                if (receivedData.Length != 0)
+                    AllDataGrid.ItemsSource = receivedData;
+
+                else
+                    MessageBox.Show("Данные отсутствуют");
+             }
+
+            else
+                MessageBox.Show("Подтвердите мастер-пароль в разделе \"НАСТРОЙКИ\"!");
         }
     }
 }

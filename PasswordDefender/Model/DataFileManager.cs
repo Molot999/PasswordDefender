@@ -26,17 +26,21 @@ namespace PasswordDefender.Model
 
             Data[] allDownloadedData = new Data[encryptedDataPaths.Length];
 
-            for (int i = 0; i <= encryptedDataPaths.Length - 1; i++)
-            {
-                using (TextReader readEncryptedDataFromDirectoryStream = new StreamReader(encryptedDataPaths[i]))
+            RijndaelCryptographer rijndaelCryptographer = new RijndaelCryptographer();
+
+                for (int i = 0; i <= encryptedDataPaths.Length - 1; i++)
                 {
-                   Data downloadedData = JsonConvert.DeserializeObject<Data>(readEncryptedDataFromDirectoryStream.ReadToEnd());
-                   new RijndaelCryptographer().DecryptData(downloadedData);
-                   allDownloadedData[i] = downloadedData;
+                    using (TextReader readEncryptedDataFromDirectoryStream = new StreamReader(encryptedDataPaths[i]))
+                    {
+                        Data downloadedData = JsonConvert.DeserializeObject<Data>(readEncryptedDataFromDirectoryStream.ReadToEnd());
+
+
+                        rijndaelCryptographer.DecryptData(downloadedData);
+
+
+                        allDownloadedData[i] = downloadedData;
+                    }
                 }
-            }
-
-
 
             return allDownloadedData;
         }

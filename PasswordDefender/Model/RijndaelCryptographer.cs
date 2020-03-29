@@ -57,6 +57,7 @@ namespace PasswordDefender.Model
                 dataToEncrypt.site = EncryptProperty(dataToEncrypt.site);
                 dataToEncrypt.login = EncryptProperty(dataToEncrypt.login);
                 dataToEncrypt.password = EncryptProperty(dataToEncrypt.password);
+                dataToEncrypt.masterPassword = EncryptProperty(dataToEncrypt.masterPassword);
 
             }
 
@@ -68,9 +69,21 @@ namespace PasswordDefender.Model
             using (_rijndael)
             {
 
-                dataToDecrypt.site = DecryptProperty(dataToDecrypt.site);
-                dataToDecrypt.login = DecryptProperty(dataToDecrypt.login);
-                dataToDecrypt.password = DecryptProperty(dataToDecrypt.password);
+                string masterPasswordInData = DecryptProperty(dataToDecrypt.masterPassword);
+
+                if (masterPasswordInData == AccessController.MasterPassword)
+                {
+                    dataToDecrypt.masterPassword = masterPasswordInData;
+                    dataToDecrypt.site = DecryptProperty(dataToDecrypt.site);
+                    dataToDecrypt.login = DecryptProperty(dataToDecrypt.login);
+                    dataToDecrypt.password = DecryptProperty(dataToDecrypt.password);
+                }
+                else
+                {
+                    dataToDecrypt.site = masterPasswordInData;
+                    dataToDecrypt.login = AccessController.MasterPassword;
+                    dataToDecrypt.password = "Ошибка! Несоответствие мастер-пароля!";
+                }
 
             }
 
