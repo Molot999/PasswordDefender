@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace PasswordDefender.Model
+namespace PasswordDefenderTest.Model
 {
     static class DataFileManager // Класс, предоставляющий методы сохранения и получения зашифрованных данных
     {
-        public static string DataFilesDirectory { get; set; } = $@"{Environment.CurrentDirectory}\data\";
+        readonly static string _dataFilesDirectory = $@"{Environment.CurrentDirectory}\data\";
         public static void SaveDataToFile(Data dataToSave) 
         {
             string dataInJSONToSave = JsonConvert.SerializeObject(dataToSave);
 
-            using (TextWriter writeEncryptedDataToFileStream = new StreamWriter($@"{DataFilesDirectory}{ dataInJSONToSave.GetHashCode()}"))
+            using (TextWriter writeEncryptedDataToFileStream = new StreamWriter($@"{_dataFilesDirectory}{ dataInJSONToSave.GetHashCode()}"))
                 writeEncryptedDataToFileStream.WriteLine(dataInJSONToSave);
         }
 
         public static Data[] GetAllData()
         {
 
-            string[] encryptedDataPaths = Directory.GetFiles(DataFilesDirectory);
+            string[] encryptedDataPaths = Directory.GetFiles(_dataFilesDirectory);
 
             Data[] allDownloadedData = new Data[encryptedDataPaths.Length];
 

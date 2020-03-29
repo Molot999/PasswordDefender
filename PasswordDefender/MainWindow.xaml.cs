@@ -24,10 +24,13 @@ namespace PasswordDefender
         public MainWindow()
         {
             InitializeComponent();
+
             if (File.Exists(AccessController.MasterPasswordFilePath) == true)
                 SetMasterPasswordButton.IsEnabled = false;
             else
                 CheckMasterPasswordButton.IsEnabled = false;
+
+            Directory.CreateDirectory(DataFileManager.DataFilesDirectory);
 
         }
 
@@ -41,6 +44,7 @@ namespace PasswordDefender
                 SetMasterPasswordButton.IsEnabled = false;
                 MasterPasswordBox.IsEnabled = false;
                 MessageBox.Show("Мастер-пароль установлен");
+                UpdateDataGrid_Click(null, null);
             }
             else
                 MessageBox.Show("Строка пустая!");
@@ -60,6 +64,7 @@ namespace PasswordDefender
                     MessageBox.Show("Мастер-пароль введен верно");
                     CheckMasterPasswordButton.IsEnabled = false;
                     MasterPasswordBox.IsEnabled = false;
+                    UpdateDataGrid_Click(null, null);
                 }
                 else
                     MessageBox.Show("Мастер-пароль НЕ верен!");
@@ -76,24 +81,25 @@ namespace PasswordDefender
             string loginForNewData = LoginOfDataBox.Text;
             string passwordForNewData = PasswordOfDataBox.Text;
 
-            if (string.IsNullOrEmpty(siteForNewData) && string.IsNullOrEmpty(loginForNewData) && string.IsNullOrEmpty(passwordForNewData))
+            if (!(!string.IsNullOrEmpty(siteForNewData) || !string.IsNullOrEmpty(loginForNewData) || !string.IsNullOrEmpty(passwordForNewData)))
                 MessageBox.Show("Укажите значения для каждого поля!");
 
             else
             {
-                if (AccessController.MasterPassword.Length != 0)
+                if (AccessController.MasterPassword != null)
                 {
                     Data newData = new Data(siteForNewData, loginForNewData, passwordForNewData, AccessController.MasterPassword);
-
-                    //List<Data> newListOfData = AllDataGrid.Items.SourceCollection.
-                    // AllDataGrid.ItemsSource
 
                     Cryptographer cryptographer = new RijndaelCryptographer();
                     cryptographer.EncryptData(newData);
 
                     DataFileManager.SaveDataToFile(newData);
 
+                    SiteOfDataBox.Text = "";
+                    LoginOfDataBox.Text = "";
+                    PasswordOfDataBox.Text = "";
                     MessageBox.Show("Данные зашифрованы и сохранены");
+                    UpdateDataGrid_Click(null, null);
                 }
 
                 else

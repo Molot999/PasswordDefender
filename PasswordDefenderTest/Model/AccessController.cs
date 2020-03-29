@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace PasswordDefender.Model
+namespace PasswordDefenderTest.Model
 {
     static class AccessController // Класс, позволяющий установить или получить существующий мастер пароль
     {
