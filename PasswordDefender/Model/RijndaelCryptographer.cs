@@ -34,7 +34,6 @@ namespace PasswordDefender.Model
             
         }
 
-
         public static byte[] Key
         {
 
@@ -54,10 +53,10 @@ namespace PasswordDefender.Model
             using (_rijndael)
             {          
                 
-                dataToEncrypt.site = EncryptProperty(dataToEncrypt.site);
-                dataToEncrypt.login = EncryptProperty(dataToEncrypt.login);
-                dataToEncrypt.password = EncryptProperty(dataToEncrypt.password);
-                dataToEncrypt.masterPassword = EncryptProperty(dataToEncrypt.masterPassword);
+                dataToEncrypt.Site = EncryptProperty(dataToEncrypt.Site);
+                dataToEncrypt.Login = EncryptProperty(dataToEncrypt.Login);
+                dataToEncrypt.Password = EncryptProperty(dataToEncrypt.Password);
+                dataToEncrypt.MasterPassword = EncryptProperty(dataToEncrypt.MasterPassword);
 
             }
 
@@ -69,21 +68,21 @@ namespace PasswordDefender.Model
             using (_rijndael)
             {
 
-                string masterPasswordInData = DecryptProperty(dataToDecrypt.masterPassword);
+                string masterPasswordInData = DecryptProperty(dataToDecrypt.MasterPassword);
 
                 if (masterPasswordInData == AccessController.MasterPassword)
                 {
-                    dataToDecrypt.masterPassword = masterPasswordInData;
-                    dataToDecrypt.site = DecryptProperty(dataToDecrypt.site);
-                    dataToDecrypt.login = DecryptProperty(dataToDecrypt.login);
-                    dataToDecrypt.password = DecryptProperty(dataToDecrypt.password);
+                    dataToDecrypt.MasterPassword = masterPasswordInData;
+                    dataToDecrypt.Site = DecryptProperty(dataToDecrypt.Site);
+                    dataToDecrypt.Login = DecryptProperty(dataToDecrypt.Login);
+                    dataToDecrypt.Password = DecryptProperty(dataToDecrypt.Password);
                 }
                 else
                 {
-                    dataToDecrypt.masterPassword = "Ошибка! Несоответствие мастер-пароля!";
-                    dataToDecrypt.site = "Ошибка! Несоответствие мастер-пароля!";
-                    dataToDecrypt.login = "Ошибка! Несоответствие мастер-пароля!";
-                    dataToDecrypt.password = "Ошибка! Несоответствие мастер-пароля!";
+                    dataToDecrypt.MasterPassword = "Ошибка! Отсутствие/несоответствие мастер-пароля!";
+                    dataToDecrypt.Site = "Ошибка! Отсутствие/несоответствие мастер-пароля!";
+                    dataToDecrypt.Login = "Ошибка! Отсутствие/несоответствие мастер-пароля!";
+                    dataToDecrypt.Password = "Ошибка! Отсутствие/несоответствие мастер-пароля!";
                 }
 
             }

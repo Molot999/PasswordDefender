@@ -8,9 +8,9 @@ using System.IO;
 
 namespace PasswordDefender.Model
 {
-    static class AccessController // Класс, позволяющий установить или получить существующий мастер пароль
+    public static class AccessController // Класс, позволяющий установить или получить существующий мастер пароль
     {
-        public static string MasterPassword { get; private set; }
+        public static string MasterPassword { get; private set; } = "larik";
         public static string MasterPasswordFilePath { get; } = $@"{Environment.CurrentDirectory}\dt1";
 
         public static bool CheckMasterPassword(string masterPassword) // Проверить мастер-пароль. Возвращает true, если мастер-пароли совпадают

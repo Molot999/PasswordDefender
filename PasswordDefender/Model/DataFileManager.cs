@@ -15,8 +15,9 @@ namespace PasswordDefender.Model
         {
             string dataInJSONToSave = JsonConvert.SerializeObject(dataToSave);
 
-            using (TextWriter writeEncryptedDataToFileStream = new StreamWriter($@"{DataFilesDirectory}{ dataInJSONToSave.GetHashCode()}"))
+            using (TextWriter writeEncryptedDataToFileStream = new StreamWriter($@"{DataFilesDirectory}{dataToSave.GetHashCode()}"))
                 writeEncryptedDataToFileStream.WriteLine(dataInJSONToSave);
+
         }
 
         public static Data[] GetAllData()
@@ -44,7 +45,6 @@ namespace PasswordDefender.Model
 
             return allDownloadedData;
         }
-
 
     }
 }

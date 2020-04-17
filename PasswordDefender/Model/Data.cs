@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace PasswordDefender.Model
 {
@@ -10,16 +12,16 @@ namespace PasswordDefender.Model
     {
         public Data(string site, string login, string password, string masterPassword)
         {
-            this.site = site;
-            this.login = login;
-            this.password = password;
-            this.masterPassword = masterPassword;
+            Site = site;
+            Login = login;
+            Password = password;
+            MasterPassword = masterPassword;
         }
 
-        public string site { get; set; }
-        public string login { get; set; }
-        public string password { get; set; }
+        public string Site { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string MasterPassword { get; set; }
 
-        public string masterPassword { get; set; }
     }
 }

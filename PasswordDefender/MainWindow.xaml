@@ -6,25 +6,26 @@
         xmlns:local="clr-namespace:PasswordDefender"
         mc:Ignorable="d"
         Title="PasswordDefender - менеджер паролей" Height="450" Width="800" ResizeMode="NoResize">
+    
     <Grid>
         <TabControl HorizontalAlignment="Left" Height="401" Margin="0,10,0,0" VerticalAlignment="Top" Width="784">
-            <TabItem Header="Данные" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="10,0,-64,-2">
+            <TabItem Header="Данные" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="10,0,-64,-2" IsSelected="True">
                 <Grid Background="#FFE8EAEE">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="666*"/>
                         <ColumnDefinition Width="103*"/>
                         <ColumnDefinition Width="9*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Удалить" HorizontalAlignment="Left" Margin="1,335,0,0" VerticalAlignment="Top" Width="101" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Column="1" IsEnabled="False"/>
+                    <Button Content="Удалить" HorizontalAlignment="Left" Margin="1,335,0,0" VerticalAlignment="Top" Width="101" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Column="1" CommandParameter="{Binding SelectedData}"/>
                     <DataGrid x:Name="AllDataGrid" HorizontalAlignment="Center" Height="314" Margin="10,16,1,0" VerticalAlignment="Top" Width="758" HorizontalGridLinesBrush="DarkGray"
-    RowBackground="#FF9DB3D8" AlternatingRowBackground="White" Grid.ColumnSpan="2" AutoGenerateColumns="False">
+    RowBackground="#FF9DB3D8" AlternatingRowBackground="White" Grid.ColumnSpan="2" ItemsSource="{Binding DataCollection}" SelectedItem="{Binding SelectedData}" AutoGenerateColumns="false">
                         <DataGrid.Columns>
-                            <DataGridTextColumn IsReadOnly="True" Header="Сайт" Width="1*" Binding="{Binding Path=site}"/>
-                            <DataGridTextColumn IsReadOnly="True" Header="Логин" Width="2*" Binding="{Binding Path=login}"/>
-                            <DataGridTextColumn IsReadOnly="True" Header="Пароль" Width="2*" Binding="{Binding Path=password}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Сайт" Width="1*" Binding="{Binding Path=Site}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Логин" Width="2*" Binding="{Binding Path=Login}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Пароль" Width="2*" Binding="{Binding Path=Password}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="UpdateDataGrid" Content="Обновить" HorizontalAlignment="Left" Margin="556,337,0,0" VerticalAlignment="Top" Width="101" Height="22" Background="#FF9DB3D8" BorderBrush="#FF588ADE" Click="UpdateDataGrid_Click"/>
+                    <Button x:Name="UpdateDataGrid" Content="Обновить" HorizontalAlignment="Left" Margin="556,335,0,0" VerticalAlignment="Top" Width="101" Height="24" Background="#FF9DB3D8" BorderBrush="#FF588ADE"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Добавить" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="74,0,-117,-2">
@@ -39,23 +40,34 @@
                     <Label HorizontalContentAlignment="Center" Content="Сайт" HorizontalAlignment="Left" Margin="114,102,0,0" VerticalAlignment="Top" Width="160" FontWeight="Bold"/>
                     <Label HorizontalContentAlignment="Center" Content="Логин" HorizontalAlignment="Left" Margin="289,102,0,0" VerticalAlignment="Top" Width="160" FontWeight="Bold"/>
                     <Label HorizontalContentAlignment="Center" Content="Пароль" HorizontalAlignment="Left" Margin="464,102,0,0" VerticalAlignment="Top" Width="160" FontWeight="Bold"/>
-                    <Button x:Name="SaveNewDataButton" Content="Сохранить" Margin="275,195,256,135" Background="#FF9DB3D8" BorderBrush="#FF588ADE" Click="SaveNewDataButton_Click"/>
+                    <Button x:Name="SaveNewDataButton" Content="Сохранить" Margin="275,195,256,135" Background="#FF9DB3D8" BorderBrush="#FF588ADE" Command="{Binding AddCommand}" CommandParameter="{Binding Text, ElementName=SiteOfDataBox}" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Настройки" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="541,0,-547,-2">
+            <TabItem Header="Настройки" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="538,0,-544,-2">
                 <Grid Background="#FFE8EAEE">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="173*"/>
+                        <ColumnDefinition Width="22*"/>
+                        <ColumnDefinition Width="151*"/>
                         <ColumnDefinition Width="605*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Мастер-пароль" Margin="129,105,300,229" FontSize="22" FontFamily="Calibri" Background="Transparent" HorizontalContentAlignment="Center" Grid.Column="1">
+                    <Label Content="Мастер-пароль" Margin="129,105,300,229" FontSize="22" FontFamily="Calibri" Background="Transparent" HorizontalContentAlignment="Center" Grid.Column="2">
                         <Label.ToolTip>
                             <ToolTip Content="Используется для шифрования и дешифрования данных"/>
                         </Label.ToolTip>
                     </Label>
-                    <PasswordBox x:Name="MasterPasswordBox" HorizontalAlignment="Left" Margin="129,141,0,0" VerticalAlignment="Top" Width="176" Height="30" FontSize="20" Background="#FFCED7E6" BorderBrush="#FF588ADE" Grid.Column="1"/>
-                    <Button x:Name="SetMasterPasswordButton" Content="Установить" HorizontalAlignment="Left" Margin="48,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="1" Click="SetMasterPasswordButton_Click"/>
-                    <Button x:Name="CheckMasterPasswordButton" Content="Проверить" HorizontalAlignment="Left" Margin="223,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="1" Click="CheckMasterPasswordButton_Click"/>
+                    <PasswordBox x:Name="MasterPasswordBox" HorizontalAlignment="Left" Margin="129,141,0,0" VerticalAlignment="Top" Width="176" Height="30" FontSize="20" Background="#FFCED7E6" BorderBrush="#FF588ADE" Grid.Column="2"/>
+                    <Button x:Name="SetMasterPasswordButton" Content="Установить" HorizontalAlignment="Left" Margin="48,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="2"/>
+                    <Button x:Name="CheckMasterPasswordButton" Content="Проверить" HorizontalAlignment="Left" Margin="223,182,0,0" VerticalAlignment="Top" Width="160" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Grid.Column="2">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=MasterPasswordBox, Path=Password.Length}" Value="0">
+                                        <Setter Property="IsEnabled" Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </Grid>
             </TabItem>
         </TabControl>

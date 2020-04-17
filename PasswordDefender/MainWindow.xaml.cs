@@ -25,16 +25,11 @@ namespace PasswordDefender
         {
             InitializeComponent();
 
-            if (File.Exists(AccessController.MasterPasswordFilePath) == true)
-                SetMasterPasswordButton.IsEnabled = false;
-            else
-                CheckMasterPasswordButton.IsEnabled = false;
-
             Directory.CreateDirectory(DataFileManager.DataFilesDirectory);
 
         }
 
-        private void SetMasterPasswordButton_Click(object sender, RoutedEventArgs e)
+        /*private void SetMasterPasswordButton_Click(object sender, RoutedEventArgs e)
         {
             string _masterPasswordInPasswordBox = MasterPasswordBox.Password;
 
@@ -74,6 +69,30 @@ namespace PasswordDefender
                 MessageBox.Show("Строка пустая!");
 
         }
+
+        private void CheckMasterPasswordButton_Click(object sender, RoutedEventArgs e)
+    {
+        string _masterPasswordInPasswordBox = MasterPasswordBox.Password;
+
+        if (string.IsNullOrEmpty(_masterPasswordInPasswordBox) == false)
+        {
+
+            bool b = AccessController.CheckMasterPassword(_masterPasswordInPasswordBox);
+
+            if (b == true)
+            {
+                MessageBox.Show("Мастер-пароль введен верно");
+                CheckMasterPasswordButton.IsEnabled = false;
+                MasterPasswordBox.IsEnabled = false;
+            }
+            else
+                MessageBox.Show("Мастер-пароль НЕ верен!");
+        }
+
+        else
+            MessageBox.Show("Строка пустая!");
+
+    }
 
         private void SaveNewDataButton_Click(object sender, RoutedEventArgs e)
         {
@@ -120,11 +139,11 @@ namespace PasswordDefender
                     AllDataGrid.ItemsSource = receivedData;
 
                 else
-                    MessageBox.Show("Данные отсутствуют");
+                    MessageBox.Show("Данные для загрузки отсутствуют");
              }
 
             else
                 MessageBox.Show("Подтвердите мастер-пароль в разделе \"НАСТРОЙКИ\"!");
-        }
+        }*/
     }
 }
