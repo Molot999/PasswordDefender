@@ -77,14 +77,6 @@ namespace PasswordDefender.Model
                     dataToDecrypt.Login = DecryptProperty(dataToDecrypt.Login);
                     dataToDecrypt.Password = DecryptProperty(dataToDecrypt.Password);
                 }
-                else
-                {
-                    dataToDecrypt.MasterPassword = "Ошибка! Отсутствие/несоответствие мастер-пароля!";
-                    dataToDecrypt.Site = "Ошибка! Отсутствие/несоответствие мастер-пароля!";
-                    dataToDecrypt.Login = "Ошибка! Отсутствие/несоответствие мастер-пароля!";
-                    dataToDecrypt.Password = "Ошибка! Отсутствие/несоответствие мастер-пароля!";
-                }
-
             }
 
         }
