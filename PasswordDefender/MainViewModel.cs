@@ -107,7 +107,10 @@ namespace PasswordDefender
 
                           if (masterPasswordIsTrue == true)
                           {
-                              //DataCollection = new ObservableCollection<Data>(DataFileManager.GetAllData());
+                              foreach (Data data in DataFileManager.GetAllData())
+                              {
+                                  DataCollection.Add(data);
+                              }
 
                               if (DataCollection == null)
                                   throw new Exception();
@@ -142,7 +145,7 @@ namespace PasswordDefender
 
         public MainViewModel()
         {
-            DataCollection = new ObservableCollection<Data>(DataFileManager.GetAllData());
+            DataCollection = new ObservableCollection<Data>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

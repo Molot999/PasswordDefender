@@ -23,6 +23,8 @@ namespace PasswordDefender.Model
             {
                 MasterPassword = masterPassword;
             }
+            else
+            { throw new Exception(); }
 
             return isMasterPasswordRight;
         }

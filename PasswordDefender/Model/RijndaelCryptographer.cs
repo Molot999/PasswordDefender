@@ -77,6 +77,13 @@ namespace PasswordDefender.Model
                     dataToDecrypt.Login = DecryptProperty(dataToDecrypt.Login);
                     dataToDecrypt.Password = DecryptProperty(dataToDecrypt.Password);
                 }
+                else
+                {
+                    dataToDecrypt.MasterPassword = "Ошибка";
+                    dataToDecrypt.Site = "Ошибка";
+                    dataToDecrypt.Login = "Ошибка";
+                    dataToDecrypt.Password = "Ошибка";
+                }
             }
 
         }
