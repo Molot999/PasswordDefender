@@ -12,13 +12,14 @@
             <TabItem Header="Данные" Background="#FF9DB3D8" FontFamily="Calibri" FontSize="16" BorderBrush="#FF588ADE" Margin="10,0,-64,-2" IsSelected="True">
                 <Grid Background="#FFE8EAEE">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="666*"/>
+                        <ColumnDefinition Width="177*"/>
+                        <ColumnDefinition Width="489*"/>
                         <ColumnDefinition Width="103*"/>
                         <ColumnDefinition Width="9*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Удалить" HorizontalAlignment="Left" Margin="1,335,0,0" VerticalAlignment="Top" Width="101" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Column="1" IsEnabled="False"/>
+                    <Button Content="Удалить" HorizontalAlignment="Left" Margin="1,335,0,0" VerticalAlignment="Top" Width="101" BorderBrush="#FF588ADE" Background="#FF9DB3D8" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Command="{Binding RemoveDataCommand}"/>
                     <DataGrid x:Name="AllDataGrid" HorizontalAlignment="Center" Height="314" Margin="10,16,1,0" VerticalAlignment="Top" Width="758" HorizontalGridLinesBrush="DarkGray"
-    RowBackground="#FF9DB3D8" AlternatingRowBackground="White" Grid.ColumnSpan="2" ItemsSource="{Binding DataCollection}" SelectedItem="{Binding SelectedData}" AutoGenerateColumns="false">
+    RowBackground="#FF9DB3D8" AlternatingRowBackground="White" Grid.ColumnSpan="3" ItemsSource="{Binding DataCollection}" SelectedItem="{Binding SelectedData, Mode=TwoWay}" AutoGenerateColumns="false" CanUserSortColumns="False" CanUserDeleteRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn IsReadOnly="True" Header="Сайт" Width="1*" Binding="{Binding Path=Site}"/>
                             <DataGridTextColumn IsReadOnly="True" Header="Логин" Width="2*" Binding="{Binding Path=Login}"/>
