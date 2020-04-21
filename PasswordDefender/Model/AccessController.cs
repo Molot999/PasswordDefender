@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace PasswordDefender.Model
 {
     public static class AccessController // Класс, позволяющий установить или получить существующий мастер пароль
     {
+        private static readonly string v = $@"{Environment.CurrentDirectory}\dt1";
+
         public static string MasterPassword { get; private set; }
-        public static string MasterPasswordFilePath { get; } = $@"{Environment.CurrentDirectory}\dt1";
+        public static string MasterPasswordFilePath { get; } = v;
+        public static bool IsMasterPasswordEstablished => File.Exists(MasterPasswordFilePath);
 
         public static bool CheckMasterPassword(string masterPassword) // Проверить мастер-пароль. Возвращает true, если мастер-пароли совпадают
         {
@@ -24,7 +25,9 @@ namespace PasswordDefender.Model
                 MasterPassword = masterPassword;
             }
             else
-            { throw new Exception(); }
+            {
+                throw new Exception();
+            }
 
             return isMasterPasswordRight;
         }
@@ -34,18 +37,23 @@ namespace PasswordDefender.Model
             MasterPassword = masterPassword;
 
             byte[] hashOfMasterPassword = EncryptMasterPassword(masterPassword);
-            new FileStream(MasterPasswordFilePath, FileMode.OpenOrCreate, FileAccess.Write).Write(hashOfMasterPassword, 0, hashOfMasterPassword.Length); // Записываем массив байтов в файл
+
+            using (FileStream fs = new FileStream(MasterPasswordFilePath, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+
+                fs.Write(hashOfMasterPassword, 0, hashOfMasterPassword.Length);
+
+            }
         }
 
-        static byte[] EncryptMasterPassword(string masterPassword) // Зашифровать мастер-пароль
+        private static byte[] EncryptMasterPassword(string masterPassword) // Зашифровать мастер-пароль
         {
             return new SHA512Managed().ComputeHash(Encoding.UTF8.GetBytes(masterPassword)); // Получаем хэш-код в виде массива байтов из передаваемого в метод мастер-пароля
         }
 
-        static byte[] GetMasterPassword() // Получить хэш-код мастер-пароля из файла
+        private static byte[] GetMasterPassword() // Получить хэш-код мастер-пароля из файла
         {
             return File.ReadAllBytes(MasterPasswordFilePath);
         }
-
     }
 }

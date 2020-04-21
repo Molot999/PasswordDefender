@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PasswordDefender.Commands;
+using PasswordDefender.Model;
+using System;
+using System.IO;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Collections.ObjectModel;
-using PasswordDefender.Model;
-using PasswordDefender.Commands;
-using System.IO;
 
 namespace PasswordDefender
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-
-        public bool MasterPasswordEstablished { get; private set; } = File.Exists(AccessController.MasterPasswordFilePath);
 
         private Data selectedData;
         public Data SelectedData
@@ -29,7 +23,7 @@ namespace PasswordDefender
             }
         }
 
-        public ObservableCollection<Data> DataCollection { get; private set; }
+        public ObservableCollection<Data> DataCollection { get; set; }
 
 
         private string site;
@@ -39,15 +33,12 @@ namespace PasswordDefender
         private string masterPassword;
 
         private bool masterPasswordIsTrue;
+        private bool masterPasswordIsChecked;
 
         public string Site { get { return site; } set { site = value; } }
-        public string Login { get { return login ; } set { login = value; } }
+        public string Login { get { return login; } set { login = value; } }
         public string Password { get { return password; } set { password = value; } }
-
-
         public string MasterPassword { get { return masterPassword; } set { masterPassword = value; } }
-
-        RijndaelCryptographer cryptographer = new RijndaelCryptographer();
 
         private RelayCommand saveNewDataCommand;
         public RelayCommand SaveNewDataCommand
@@ -62,13 +53,17 @@ namespace PasswordDefender
                           Data data = new Data(site, login, password, AccessController.MasterPassword);
                           DataCollection.Insert(0, data);
 
-                          cryptographer.EncryptData(data);
+                          RijndaelCryptographer.EncryptData(data);
                           DataFileManager.SaveDataToFile(data);
+
+                          RijndaelCryptographer.DecryptData(data);
                           SelectedData = data;
                       }
                       else
                       { throw new Exception(); }
-                  }));
+                  },
+
+                  (obj) => masterPasswordIsTrue == true));
             }
         }
 
@@ -81,10 +76,10 @@ namespace PasswordDefender
                 return removeDataCommand ??
                     (removeDataCommand = new RelayCommand(obj =>
                     {
-                        Data data = obj as Data;
-                        if (data != null)
+                        if (SelectedData != null)
                         {
-                            DataCollection.Remove(data);
+                            DataFileManager.DeleteData(SelectedData);
+                            DataCollection.Remove(SelectedData);
                         }
                     },
 
@@ -107,19 +102,18 @@ namespace PasswordDefender
 
                           if (masterPasswordIsTrue == true)
                           {
+                              masterPasswordIsChecked = true;
+
                               foreach (Data data in DataFileManager.GetAllData())
                               {
                                   DataCollection.Add(data);
                               }
-
-                              if (DataCollection == null)
-                                  throw new Exception();
                           }
-
                           else { throw new Exception(); }
                       }
-                      else { throw new Exception();}
-                   }));
+                      else { throw new Exception(); }
+                  },
+                  (obj) => AccessController.IsMasterPasswordEstablished == true && masterPasswordIsChecked == false));
             }
         }
 
@@ -134,12 +128,14 @@ namespace PasswordDefender
 
                       if (string.IsNullOrEmpty(MasterPassword) == false)
                       {
-
                           AccessController.SetMasterPassword(MasterPassword);
+                          Directory.CreateDirectory(DataFileManager.DataFilesDirectory);
 
+                          CheckMasterPasswordCommand.Execute(obj);
                       }
 
-                  }));
+                  },
+                  (obj) => AccessController.IsMasterPasswordEstablished == false));
             }
         }
 
@@ -153,6 +149,6 @@ namespace PasswordDefender
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
-        
+
     }
 }

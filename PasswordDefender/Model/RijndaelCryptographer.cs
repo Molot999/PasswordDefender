@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace PasswordDefender.Model
 {
-    public class RijndaelCryptographer : Cryptographer
+    public static class RijndaelCryptographer
     {
         readonly static string _keyFilePath = $@"{Environment.CurrentDirectory}\dtK";
         readonly static string _IVFilePath = $@"{Environment.CurrentDirectory}\dtIV";
@@ -20,10 +16,10 @@ namespace PasswordDefender.Model
         static byte[] _IV;
         static byte[] _Key;
 
-        public static byte[] IV 
+        public static byte[] IV
         {
 
-            get 
+            get
             {
                 if (_IV == null)
                     return GetIV();
@@ -31,7 +27,7 @@ namespace PasswordDefender.Model
                 else
                     return _IV;
             }
-            
+
         }
 
         public static byte[] Key
@@ -48,11 +44,11 @@ namespace PasswordDefender.Model
 
         }
 
-        public void EncryptData(Data dataToEncrypt)
+        public static void EncryptData(Data dataToEncrypt)
         {
             using (_rijndael)
-            {          
-                
+            {
+
                 dataToEncrypt.Site = EncryptProperty(dataToEncrypt.Site);
                 dataToEncrypt.Login = EncryptProperty(dataToEncrypt.Login);
                 dataToEncrypt.Password = EncryptProperty(dataToEncrypt.Password);
@@ -62,7 +58,7 @@ namespace PasswordDefender.Model
 
         }
 
-        public void DecryptData(Data dataToDecrypt)
+        public static void DecryptData(Data dataToDecrypt)
         {
 
             using (_rijndael)
@@ -97,7 +93,7 @@ namespace PasswordDefender.Model
 
             _Key = File.ReadAllBytes(_keyFilePath);
 
-                return _Key;
+            return _Key;
         }
 
         static byte[] GetIV()
@@ -139,7 +135,7 @@ namespace PasswordDefender.Model
         {
 
             if (_rijndaelEncryptor == null)
-                 _rijndaelEncryptor = _rijndael.CreateEncryptor(Key, IV);
+                _rijndaelEncryptor = _rijndael.CreateEncryptor(Key, IV);
 
             using (MemoryStream memoryStreamOfEncryptor = new MemoryStream())
             {
@@ -150,7 +146,7 @@ namespace PasswordDefender.Model
                         swEncrypt.WriteLine(propertyOfData);
                     }
 
-                    return  Convert.ToBase64String(memoryStreamOfEncryptor.ToArray());
+                    return Convert.ToBase64String(memoryStreamOfEncryptor.ToArray());
 
                 }
             }
@@ -172,7 +168,7 @@ namespace PasswordDefender.Model
                     {
                         decryptedProperty = srDecrypt.ReadLine();
                     }
-                                        
+
                 }
             }
 

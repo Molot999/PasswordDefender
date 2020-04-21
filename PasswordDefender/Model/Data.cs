@@ -1,27 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace PasswordDefender.Model
 {
-    public class Data // Модель данных, подлежащих шифрованию и дешифрованию
+    public class Data : INotifyPropertyChanged // Модель данных, подлежащих шифрованию и дешифрованию
     {
         public Data(string site, string login, string password, string masterPassword)
         {
             Site = site;
             Login = login;
             Password = password;
-            MasterPassword = masterPassword;
+            this.masterPassword = masterPassword;
+            Id = GetHashCode().ToString();
         }
 
-        public string Site { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string MasterPassword { get; set; }
+        private string id;
+        private string site;
+        private string login;
+        private string password;
+        private string masterPassword;
 
+        public string Id
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+        public string Site
+        {
+            get { return site; }
+            set
+            {
+                site = value;
+                OnPropertyChanged("Site");
+            }
+        }
+        public string Login
+        {
+            get { return login; }
+            set
+            {
+                login = value;
+                OnPropertyChanged("Login");
+            }
+        }
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                OnPropertyChanged("Password");
+            }
+        }
+        public string MasterPassword
+        {
+            get { return masterPassword; }
+            set
+            {
+                masterPassword = value;
+                OnPropertyChanged("MasterPassword");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }
