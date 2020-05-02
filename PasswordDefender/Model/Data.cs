@@ -42,7 +42,7 @@ namespace PasswordDefender.Model
         {
             get { return login; }
             set
-            {
+            { 
                 login = value;
                 OnPropertyChanged("Login");
             }
