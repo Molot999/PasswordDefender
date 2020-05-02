@@ -10,7 +10,7 @@ namespace PasswordDefender
         {
             InitializeComponent();
 
-            MainViewModel viewModel = new MainViewModel();
+            MainViewModel viewModel = new MainViewModel(); 
             DataContext = viewModel;
 
         }
